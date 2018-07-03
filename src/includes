@@ -1,0 +1,13 @@
+<?php
+require_once('/src/openair.php');
+require_once('/src/auth.php');
+require_once('/src/response.php');
+require_once('/src/read/base/command.php');
+require_once('/src/read/Projects.php');
+require_once('/src/read/Projecttask.php');
+require_once('/src/read/Assignedusers.php');
+require_once('/src/read/user.php');
+require_once('/src/read/worklog.php');
+define('EOL',"<br>");
+
+?>
