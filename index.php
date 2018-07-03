@@ -25,6 +25,13 @@ $h4->toString('projecttaskid','userid');
 $h5 = $oa->ReadUserById($h4,'userid');
 $oa->Execute();
 echo "<h3>----ReadUserById-----</h3>";
-$h5->toString('id','name');
+$data = $h5->toString('id','name','currency');
+
+echo "<h3>----ReadWorkLogsByProjectTaskId-----</h3>";
+$h6 = $oa->ReadWorkLogsByProjectTaskId('59484,66242');
+$oa->Execute();
+$h6->toString('date','userid','decimal_hours');
+
+
 return;
 ?>
