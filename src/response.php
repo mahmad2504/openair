@@ -15,7 +15,7 @@ class Response
 	public function __get($name)
 	{
 		$data = array();
-		$data_dup_check = array();
+		//$data_dup_check = array();
 		foreach($this->cmd as $cmd)
 		{
 			//var_dump($cmd->result);
@@ -24,17 +24,21 @@ class Response
 			{
 				//if(!array_key_exists($v,$data_dup_check))
 				{
-					$data_dup_check[$v] = 1;
+					//$data_dup_check[$v] = 1;
 					$data[] = $v;
 				}
 			}
 		}
 		return $data;
 	}
-	function toString()
+	public function DateToString($val)
 	{
-		$args = func_get_args();
+		return $val['Date']['year']."-".$val['Date']['month']."-".$val['Date']['day'];
+	}
+	private function PrepareOutput($args,$debug=0)
+	{
 		$data = array();
+		$returndata = array();
 		if(count($args) == 0)
 		{
 			foreach($this->cmd as $cmd)
@@ -54,14 +58,31 @@ class Response
 			{
 				for($j=0;$j<count($data);$j++)
 				{
-					echo "(".$args[$j].")".$data[$j][$i]." ";
+					if(strtolower($args[$j]) == 'date')
+						$returndata[$i][$args[$j]]=$this->DateToString($data[$j][$i]);
+					else
+						$returndata[$i][$args[$j]]=$data[$j][$i];
+					if($debug)
+					{
+						echo "(".$args[$j].")".$returndata[$i][$args[$j]]." ";
+					}
 				}
+				if($debug)
 				echo EOL;
 			}
-			//var_dump($${"file" . $arg}
-			//echo EOL;
-			
 		}
+		return $returndata;
+	}
+	function toString()
+	{
+		$args = func_get_args();
+		return $this->PrepareOutput($args,1);
+	}
+	function Data()
+	{
+		$args = func_get_args();
+		return $this->PrepareOutput($args,0);
+	
 	}
 	
 }

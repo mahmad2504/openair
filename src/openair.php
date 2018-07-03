@@ -341,23 +341,31 @@ class OpenAir
     @param[in] $projecttaskid id of the project task
     @returns   object of type ReadCommand. For results, access result member of this object. result is filled by  Execute function 
 	*/
-	function ReadWorkLogsByProjectTaskId($projecttaskid)
+	function _ReadWorkLogsByProjectTaskId($projecttaskid)
 	{
 		$cworklogs = new Command_ReadWorklogsByProjectTaskId($projecttaskid,1000);
 		$this->AddCommand($cworklogs);
 		return $cworklogs;
 	}
-	/*!
-    Add command on stack to read all worklogs logged on a particular project 
-    @param[in] $projectid id of the project
-    @returns   object of type ReadCommand. For results, access result member of this object. result is filled by  Execute function 
-	*/
-	function ReadWorkLogsByProjectId($projectid)
+	public function ReadWorkLogsByProjectTaskId($in,$field='userid') 
 	{
-		$cworklogs = new Command_ReadWorklogsByProjectId($projectid,1000);
-		$this->AddCommand($cworklogs);
-		return $cworklogs;
+		$ids = array();
+		$handles = array();
+		if (is_a($in, 'Response')) 
+		{
+			foreach($in->$field as $f)
+				$ids[$f] = $f;
+		}
+		else
+		{
+			$ids = explode(",",$in);
+		}
+		foreach($ids as $key=>$id)
+		{
+			$handles[] = $this->_ReadWorkLogsByProjectTaskId($id);
+		}
+		$response = new Response($handles);
+		return $response;
 	}
-	
 }
 ?>
