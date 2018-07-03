@@ -1,4 +1,8 @@
 <?php
+/**
+ *  This Class reads User Table from OpenAir Database.
+ *  https://www.openair.com/download/OpenAirXMLAPIGuide.pdf page 134 
+ */
 class Command_ReadUserById extends ReadCommand
 {
 	function __construct($id) 
@@ -27,7 +31,7 @@ class Command_ReadUserById extends ReadCommand
 		$ids = $this->id;
 		$names = $this->name;
 		for($i=0;$i<count($ids);$i++)
-			echo $ids[$i]." ".$names[$i].EOL;
+			echo "(id)".$ids[$i]." (name)".$names[$i].EOL;
 		
 		
 	}
