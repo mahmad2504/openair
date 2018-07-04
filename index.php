@@ -1,8 +1,13 @@
 <?php
+define('API_KEY','XXXXXXX');
+define('ORGANIZATION','XXXXX');
+define('USERNAME','XXXXX');
+define('PASSWORD','XXXXXX');
+
 require_once('/src/includes');
 
-$oa = new OpenAir('apikey');
-$auth = new Auth('organization','user','password');
+$oa = new OpenAir(API_KEY);
+$auth = new Auth(ORGANIZATION,USERNAME,PASSWORD);
 $oa->AddAuth($auth);
 
 $h1 = $oa->ReadProjectByName('5979|MEL/MEIF for Power Generation Svcs');
